@@ -37,4 +37,8 @@ ENV LS_ADMIN_USERNAME=admin
 ENV LS_ADMIN_PASSWORD=adminpassword
 ENV LS_ADMIN_EMAIL=admin@example.com
 
+# Set Django/Label Studio settings
+ENV DJANGO_CSRF_TRUSTED_ORIGINS=https://your-app.onrender.com
+ENV LABEL_STUDIO_ALLOW_ORIGINS=https://your-app.onrender.com
+
 ENTRYPOINT ["/app/entrypoint.sh"]
