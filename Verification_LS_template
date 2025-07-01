@@ -1,0 +1,167 @@
+<View style="background-color:black;color:white;padding:20px;font-family:sans-serif">
+
+  <Style>
+    .box {
+      border: 2px solid #7D5FFF;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+    .title {
+      color: #FFFFFF;
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .entry-label {
+      color: #FFFFFF;
+      font-weight: bold;
+      margin-top: 30px;
+      margin-bottom: 3px;
+      font-size: 15px;
+    }
+    .entry-value {
+      color: #FFFFFF;
+      background-color: #1E1E1E;
+      padding: 5px 8px;
+      margin-bottom: 12px;
+      border-left: 4px solid #7D5FFF;
+      border-radius: 3px;
+    }
+    .column {
+      width: 48%;
+      display: inline-block;
+      vertical-align: top;
+    }
+    .question-label {
+      color: #FFFFFF;
+      font-weight: bold;
+      font-size: 16px;
+      margin-top: 30px;
+    }
+    .lsf-label {
+      color: #FFFFFF !important;
+    }
+    .lsf-choice {
+      color: #FFFFFF !important;
+    }
+    .htx-text{ white-space: pre-wrap; color: #FFFFFF; }
+    /* Force white text for all choices, including selected and hovered */
+    .lsf-choice, .ant-radio-wrapper, .ant-radio-wrapper span, .ant-radio-inner, .ant-radio-checked .ant-radio-inner, .ant-radio-checked .ant-radio-inner:after {
+      color: #FFFFFF !important;
+      fill: #FFFFFF !important;
+    }
+    .ant-radio-wrapper span {
+      color: #FFFFFF !important;
+    }
+    .ant-radio-inner {
+      border-color: #FFFFFF !important;
+    }
+    .ant-radio-checked .ant-radio-inner {
+      background-color: #4D8BFF !important;
+      border-color: #4D8BFF !important;
+    }
+    .ant-radio-wrapper, .lsf-choice {
+      background: #222 !important;   /* or #1E1E1E for a softer black */
+      color: #FFF !important;
+      border-radius: 6px !important;
+      padding: 6px 16px !important;
+      margin: 4px 0 !important;
+      display: inline-block !important;
+    }
+    .ant-radio-inner {
+      border-color: #FFF !important;
+    }
+    .ant-radio-checked .ant-radio-inner {
+      background-color: #4D8BFF !important;
+      border-color: #4D8BFF !important;
+    }
+  </Style>
+
+  <Header value="Product Match Assessment" style="color:#FFFFFF;font-size:24px;margin-bottom:20px;"/>
+
+  <!-- Relationship and Label Definitions -->
+<Labels name="spec_label" toName="wf_prod_wd,hd_prod_wd,wf_prod_spec,hd_prod_spec">
+  <Label value="Match" background="#4D8BFF" color="#FFFFFF"/>        
+  <Label value="Mismatch" background="#FF4D88" color="#FFFFFF"/> 
+</Labels>
+  <Relations>
+    <Relation value="Qualifying Match" />
+    <Relation value="Disqualifying Mismatch" />
+  </Relations>
+  
+  <View>
+    <View className="column box">
+      <Header value="WF Product" className="title"/>
+      <View>
+        <Header className="entry-label" value="Option Name"/>
+        <Text className="entry-value" name="wf_option" value="$WFoptionname"/>
+
+        <Header className="entry-label" value="UPC"/>
+        <Text className="entry-value" name="wf_upc" value="$WFUPC"/>
+
+        <Header className="entry-label" value="MPN"/>
+        <Text className="entry-value" name="wf_mpn" value="$WFMPN"/>
+
+        <Header className="entry-label" value="MName"/>
+        <Text className="entry-value" name="wf_mname" value="$WFMName"/>
+
+        <Header className="entry-label" value="Product WD"/>
+        <Text className="entry-value" name="wf_prod_wd" value="$WFprodwd"/>
+
+        <Header className="entry-label" value="Product Spec"/>
+        <Text className="entry-value" name="wf_prod_spec" value="$WFprodspec"/>
+
+        <Header className="entry-label" value="Product Designation"/>
+        <Text className="entry-value" name="wf_prod_desig" value="$WFproddesig"/>
+      </View>
+    </View>
+
+    <View className="column box">
+      <Header value="HD Product" className="title"/>
+      <View>
+        <Header className="entry-label" value="Option Name"/>
+        <Text className="entry-value" name="hd_option" value="$HDOptionName"/>
+
+        <Header className="entry-label" value="UPC"/>
+        <Text className="entry-value" name="hd_upc" value="$HDUPC"/>
+
+        <Header className="entry-label" value="MPN"/>
+        <Text className="entry-value" name="hd_mpn" value="$HDMPN"/>
+
+        <Header className="entry-label" value="MName"/>
+        <Text className="entry-value" name="hd_mname" value="$HDMName"/>
+
+        <Header className="entry-label" value="Product WD"/>
+        <Text className="entry-value" name="hd_prod_wd" value="$HDprodwd"/>
+
+        <Header className="entry-label" value="Product Spec"/>
+        <Text className="entry-value" name="hd_prod_spec" value="$HDprodspec"/>
+
+        <Header className="entry-label" value="Product Designation"/>
+        <Text className="entry-value" name="hd_prod_desig" value="$HDproddesig"/>
+      </View>
+    </View>
+  </View>
+  
+ <Header className="entry-label" value="Tiny Fish Match Rating"/>
+        <Text className="entry-value" name="match_rating" value="$HDmatchrating"/>
+  
+  <View style="margin-top:30px;">
+    <Header className="question-label" value="Are these the same product?"/>
+    <Choices name="product_match" toName="match_rating" choice="single" required="true" showInline="true">
+      <Choice value="YES" background="#4D8BFF" color="#FFFFFF"/>
+      <Choice value="NO" background="#FF4D88" color="#FFFFFF"/>
+    </Choices>
+
+    <Header className="question-label" value="Is the HD match rating correct?"/>
+    <Choices name="rating_correct" toName="match_rating" choice="single" required="true" showInline="true">
+      <Choice value="YES" background="#4D8BFF" color="#FFFFFF"/>
+      <Choice value="NO" background="#FF4D88" color="#FFFFFF"/>
+    </Choices>
+  </View>
+ <Header className="question-label" value="Add Notes/Comments Here"/>
+
+  <TextArea name="notes" toName="match_rating"/>
+
+</View>
