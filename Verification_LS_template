@@ -76,14 +76,29 @@
       background-color: #4D8BFF !important;
       border-color: #4D8BFF !important;
     }
+    /* Make annotation labels inline */
+    .lsf-labels {
+      display: flex !important;
+      flex-direction: row !important;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
   </Style>
 
   <Header value="Product Match Assessment" style="color:#FFFFFF;font-size:24px;margin-bottom:20px;"/>
 
   <!-- Relationship and Label Definitions -->
-<Labels name="spec_label" toName="wf_prod_wd,hd_prod_wd,wf_prod_spec,hd_prod_spec">
-  <Label value="Match" background="#4D8BFF" color="#FFFFFF"/>        
-  <Label value="Mismatch" background="#FF4D88" color="#FFFFFF"/> 
+<Labels name="wf_wd_label" toName="wf_prod_wd" showInline="true">
+  <Label value="Wayfair_wd" background="#4D8BFF" granularity="word" color="#FFFFFF" showInline="true"/>        
+</Labels>
+<Labels name="hd_wd_label" toName="hd_prod_wd" showInline="true">
+  <Label value="Home Depot_wd" background="#FF4D88"  granularity="word" color="#FFFFFF" showInline="true"/> 
+</Labels>
+<Labels name="wf_spec_label" toName="wf_prod_spec" showInline="true">
+  <Label value="Wayfair_spec" background="#4D8BFF"  granularity="word" color="#FFFFFF" showInline="true"/>        
+</Labels>
+<Labels name="hd_spec_label" toName="hd_prod_spec" showInline="true">
+  <Label value="Home Depot_spec" background="#FF4D88"  granularity="word" color="#FFFFFF" showInline="true"/> 
 </Labels>
   <Relations>
     <Relation value="Qualifying Match" />
