@@ -11,25 +11,7 @@ WORKDIR /app
 # Install Label Studio
 RUN pip install --no-cache-dir label-studio
 
-# Create a non-root user for security
-RUN useradd -m labelstudio
-
-# Create a directory for persistent data
-RUN mkdir -p /data && chown labelstudio:labelstudio /data
-VOLUME ["/data"]
-
-# Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
-
 # Expose the default Label Studio port
 EXPOSE 8080
 
-# Switch to non-root user
-USER labelstudio
-
-# Healthcheck for Render.com
-HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost:8080/ || exit 1
-
-ENTRYPOINT ["/app/entrypoint.sh"]
+CMD ["label-studio", "start", "--host", "0.0.0.0", "--port", "8080"]
