@@ -15,5 +15,9 @@ sleep 2
 # Create admin user
 label-studio user --username "$LS_ADMIN_USERNAME" --password "$LS_ADMIN_PASSWORD" --email "$LS_ADMIN_EMAIL" --data-dir /data || true
 
+echo "==== ENVIRONMENT VARIABLES ===="
+env
+echo "==============================="
+
 # Start Label Studio in the foreground
 exec label-studio start --host 0.0.0.0 --port 8080 --data-dir /data
