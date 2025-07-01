@@ -10,7 +10,6 @@ if ! grep -q "CSRF_TRUSTED_ORIGINS" "$SETTINGS_FILE"; then
   echo "CSRF_TRUSTED_ORIGINS = os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',')" >> "$SETTINGS_FILE"
 fi
 
-# Use the PORT Render expects
 PORT=${PORT:-8080}
 echo "Starting Label Studio on port $PORT"
 
