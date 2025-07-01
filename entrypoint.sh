@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 echo "Injecting CSRF_TRUSTED_ORIGINS into Django settings..."
 
@@ -13,4 +14,16 @@ fi
 PORT=${PORT:-8080}
 echo "Starting Label Studio on port $PORT"
 
-exec label-studio start --port "$PORT" --host 0.0.0.0 --no-browser
+# Start Label Studio in the background to initialize DB
+label-studio start --host 0.0.0.0 --port "$PORT" --data-dir /data &
+sleep 10
+
+# Create admin user if it doesn't exist
+label-studio user --username "$LS_ADMIN_USERNAME" --password "$LS_ADMIN_PASSWORD" --email "$LS_ADMIN_EMAIL" --data-dir /data || true
+
+# Kill the background Label Studio process
+pkill -f "label-studio start" || true
+sleep 2
+
+# Start Label Studio in the foreground
+exec label-studio start --host 0.0.0.0 --port "$PORT" --data-dir /data

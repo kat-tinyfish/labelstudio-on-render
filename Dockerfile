@@ -1,11 +1,40 @@
-FROM heartexlabs/label-studio:latest
+# Use an official Python runtime as a parent image
+FROM python:3.10-slim
 
-ENV DJANGO_CSRF_TRUSTED_ORIGINS=https://tiny-fish-poc-labelstudio.onrender.com
-ENV LABEL_STUDIO_ALLOW_ORIGINS=https://tiny-fish-poc-labelstudio.onrender.com
-ENV LABEL_STUDIO_DISABLE_SIGNUP_WITHOUT_LINK=true
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-# Copy entrypoint script to a writable directory
-COPY entrypoint.sh /label-studio/entrypoint.sh
-RUN chmod +x /label-studio/entrypoint.sh
+# Set work directory
+WORKDIR /app
 
-ENTRYPOINT ["/label-studio/entrypoint.sh"]
+# Install Label Studio
+RUN pip install --no-cache-dir label-studio
+
+# Create a non-root user for security
+RUN useradd -m labelstudio
+
+# Create a directory for persistent data
+RUN mkdir -p /data && chown labelstudio:labelstudio /data
+VOLUME ["/data"]
+
+# Expose the default Label Studio port
+EXPOSE 8080
+
+# Switch to non-root user
+USER labelstudio
+
+# Healthcheck for Render.com
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+  CMD curl -f http://localhost:8080/ || exit 1
+
+# Copy entrypoint script
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+# Set environment variables for admin user
+ENV LS_ADMIN_USERNAME=admin
+ENV LS_ADMIN_PASSWORD=adminpassword
+ENV LS_ADMIN_EMAIL=admin@example.com
+
+ENTRYPOINT ["/app/entrypoint.sh"]
