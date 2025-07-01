@@ -11,6 +11,10 @@ WORKDIR /app
 # Install Label Studio
 RUN pip install --no-cache-dir label-studio
 
+# Copy entrypoint script and set permissions as root
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Create a non-root user for security
 RUN useradd -m labelstudio
 
@@ -27,10 +31,6 @@ USER labelstudio
 # Healthcheck for Render.com
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
   CMD curl -f http://localhost:8080/ || exit 1
-
-# Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
 
 # Set environment variables for admin user
 ENV LS_ADMIN_USERNAME=admin
