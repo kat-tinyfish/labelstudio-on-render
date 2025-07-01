@@ -19,5 +19,8 @@ echo "==== ENVIRONMENT VARIABLES ===="
 env
 echo "==============================="
 
+# Remove old database if it exists (for clean start)
+rm -f /data/label_studio.sqlite3
+
 # Start Label Studio in the foreground
 exec label-studio start --host 0.0.0.0 --port 8080 --data-dir /data

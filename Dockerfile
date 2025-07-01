@@ -18,4 +18,4 @@ RUN echo "DJANGO_CSRF_TRUSTED_ORIGINS=$DJANGO_CSRF_TRUSTED_ORIGINS"
 
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
-CMD ["/app/entrypoint.sh"]
+CMD ["label-studio", "start", "--host", "0.0.0.0", "--port", "8080", "--data-dir", "/tmp/label-studio"]
